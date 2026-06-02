@@ -5,10 +5,10 @@ on:
     branches:
       - dev
 
-  workflow_dispatch:
-
 jobs:
-  terraform:
+
+  validate:
+    name: Validate
     runs-on: ubuntu-latest
 
     defaults:
@@ -16,21 +16,39 @@ jobs:
         working-directory: infra/envs/dev
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
 
-      - name: Show Repository Structure
-        run: |
-          echo "Current Directory:"
-          pwd
-          echo "Repository Structure:"
-          find $GITHUB_WORKSPACE -type f | sort
+      - run: terraform init
+      - run: terraform validate
 
-      - name: Show Terraform Files
-        run: |
-          pwd
-          ls -la
-          find . -name "*.tf"
+  plan:
+    name: Plan
+    runs-on: ubuntu-latest
+    needs: validate
+
+    defaults:
+      run:
+        working-directory: infra/envs/dev
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+
+      - run: terraform init
+      - run: terraform plan
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: plan
+
+    defaults:
+      run:
+        working-directory: infra/envs/dev
+
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Azure Login
         uses: azure/login@v2
@@ -43,20 +61,7 @@ jobs:
               "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
             }
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Version
-        run: terraform version
-
-      - name: Terraform Init
-        run: terraform init
-
-      - name: Terraform Validate
-        run: terraform validate
-
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
+      - run: terraform init
+      - run: terraform apply -auto-approve
