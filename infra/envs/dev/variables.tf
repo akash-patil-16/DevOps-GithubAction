@@ -13,3 +13,11 @@ variable "storage_account" {
     resource_group_key       = string
   }))
 }
+
+variable "Vnet" {
+  type = map(object({
+    name               = string
+    resource_group_key = string
+    address_space      = list(string)
+  }))
+}

@@ -15,3 +15,13 @@ module "storage-account" {
   account_tier             = each.value.account_tier
   account_replication_type = each.value.account_replication_type
 }
+
+module "Vnet" {
+
+  source              = "../../modules/Vnet"
+  for_each            = var.Vnet
+  name                = each.value.name
+  resource_group_name = module.resource-group[each.value.resource_group_key].name
+  location            = module.resource-group[each.value.resource_group_key].location
+  address_space       = each.value.address_space
+}

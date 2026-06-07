@@ -13,3 +13,11 @@ storage_account = {
     account_replication_type = "LRS"
   }
 }
+
+Vnet = {
+  vnet1 = {
+    name               = "vnet-apatil"
+    resource_group_key = "rg1"
+    address_space      = ["10.0.0.0/16"]
+  }
+}
