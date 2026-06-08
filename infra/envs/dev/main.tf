@@ -25,3 +25,12 @@ module "Vnet" {
   location            = module.resource-group[each.value.resource_group_key].location
   address_space       = each.value.address_space
 }
+
+module "subnet" {
+  source               = "../../modules/subnet"
+  for_each             = var.subnet
+  name                 = each.value.name
+  resource_group_name  = module.resource-group[each.value.resource_group_key].name
+  virtual_network_name = module.Vnet[each.value.vnet_key].name
+  address_prefixes     = each.value.address_prefixes
+}

@@ -21,3 +21,26 @@ Vnet = {
     address_space      = ["10.0.0.0/16"]
   }
 }
+
+subnet = {
+  subnet1 = {
+    name               = "frontend-subnet"
+    resource_group_key = "rg1"
+    vnet_key           = "vnet1"
+    address_prefixes   = ["10.0.1.0/24"]
+  }
+
+  subnet2 = {
+    name               = "backend-subnet"
+    resource_group_key = "rg1"
+    vnet_key           = "vnet1"
+    address_prefixes   = ["10.0.2.0/24"]
+  }
+
+  subnet3 = {
+    name               = "management-subnet"
+    resource_group_key = "rg1"
+    vnet_key           = "vnet1"
+    address_prefixes   = ["10.0.3.0/24"]
+  }
+}
