@@ -45,7 +45,14 @@ variable "windows-VM" {
     name               = string
     resource_group_key = string
     nic_VM_key         = string
-    admin_username = string
-    admin_password = string
   }))
 } 
+
+variable "admin_username" {
+  type = string
+}
+
+variable "admin_password" {
+  type      = string
+  sensitive = true
+}
