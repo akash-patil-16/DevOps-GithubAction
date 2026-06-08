@@ -52,6 +52,6 @@ module "windows-VM" {
   location              = module.resource-group[each.value.resource_group_key].location
   resource_group_name   = module.resource-group[each.value.resource_group_key].name
   network_interface_ids = [module.nic-VM[each.value.nic_VM_key].id]
-  admin_username        = each.value.admin_username
-  admin_password        = each.value.admin_password
+  admin_username        = var.admin_username
+  admin_password        = var.admin_password
 }
