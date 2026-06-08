@@ -44,3 +44,20 @@ subnet = {
     address_prefixes   = ["10.0.3.0/24"]
   }
 }
+
+nic_VM = {
+  nic1 = {
+    name               = "nic-apatil"
+    resource_group_key = "rg1"
+    subnet_key         = "subnet1"
+    ip_name            = "internal"
+  }
+}
+
+windows-VM = {
+  vm1 = {
+    name               = "vm-apatil"
+    resource_group_key = "rg1"
+    nic_VM_key         = "nic1"
+  }
+}
