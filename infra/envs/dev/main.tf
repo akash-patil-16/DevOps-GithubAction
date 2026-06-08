@@ -34,3 +34,24 @@ module "subnet" {
   virtual_network_name = module.Vnet[each.value.vnet_key].name
   address_prefixes     = each.value.address_prefixes
 }
+
+module "nic-VM" {
+  source              = "../../modules/nic-VM"
+  for_each            = var.nic_VM
+  name                = each.value.name
+  location            = module.resource-group[each.value.resource_group_key].location
+  resource_group_name = module.resource-group[each.value.resource_group_key].name
+  subnet_id           = module.subnet[each.value.subnet_key].id
+  ip_name             = each.value.ip_name
+}
+
+module "windows-VM" {
+  source                = "../../modules/windows-VM"
+  for_each              = var.windows-VM
+  name                  = each.value.name
+  location              = module.resource-group[each.value.resource_group_key].location
+  resource_group_name   = module.resource-group[each.value.resource_group_key].name
+  network_interface_ids = [module.nic-VM[each.value.nic_VM_key].id]
+  admin_username        = var.admin_username
+  admin_password        = var.admin_password
+}

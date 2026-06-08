@@ -30,3 +30,22 @@ variable "subnet" {
     address_prefixes   = list(string)
   }))
 }
+
+variable "nic_VM" {
+  type = map(object({
+    name               = string
+    resource_group_key = string
+    subnet_key         = string
+    ip_name            = string
+  }))
+}
+
+variable "windows-VM" {
+  type = map(object({
+    name               = string
+    resource_group_key = string
+    nic_VM_key         = string
+    admin_username = string
+    admin_password = string
+  }))
+} 
