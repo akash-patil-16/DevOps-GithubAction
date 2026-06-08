@@ -21,3 +21,12 @@ variable "Vnet" {
     address_space      = list(string)
   }))
 }
+
+variable "subnet" {
+  type = map(object({
+    name               = string
+    resource_group_key = string
+    vnet_key           = string
+    address_prefixes   = list(string)
+  }))
+}
