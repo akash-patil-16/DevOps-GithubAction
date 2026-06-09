@@ -13,9 +13,9 @@ resource "azurerm_windows_virtual_machine" "vm_main" {
   }
 
   source_image_reference {
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2016-Datacenter"
+    publisher = "MicrosoftWindowsDesktop"
+    offer     = "windows-10"
+    sku       = "win10-22h2-pro"
     version   = "latest"
   }
 }
