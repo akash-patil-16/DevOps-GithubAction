@@ -47,8 +47,8 @@ subnet = {
 
 pip-VM = {
   pip1 = {
-    pip_name            = "pip-frontend"
-    resource_group_key   = "rg1"
+    pip_name           = "pip-frontend"
+    resource_group_key = "rg1"
   }
 }
 
@@ -59,6 +59,7 @@ nic_VM = {
     subnet_key         = "subnet1"
     ip_name            = "internal"
     pip_key            = "pip1"
+    nsg_key            = "nsg1"
   }
 }
 
@@ -67,5 +68,12 @@ windows-VM = {
     name               = "vm-apatil"
     resource_group_key = "rg1"
     nic_VM_key         = "nic1"
+  }
+}
+
+nsg_VM = {
+  nsg1 = {
+    nsg_name           = "nsg-frontend"
+    resource_group_key = "rg1"
   }
 }
