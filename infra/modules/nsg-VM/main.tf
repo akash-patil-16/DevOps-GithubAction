@@ -10,8 +10,8 @@ resource "azurerm_network_security_group" "nsg_main"{
     access                     = "Allow"
     protocol                   = "Tcp"
     source_port_range          = "*"
-    destination_port_range     = "*"
+    destination_port_range     = "*" //RDP : 3389  SSH : 22 HTTP : 80 HTTPS : 443
     source_address_prefix      = "*"
     destination_address_prefix = "*"
-  }
+  } 
 }
