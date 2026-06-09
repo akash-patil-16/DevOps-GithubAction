@@ -72,3 +72,11 @@ variable "nsg_VM" {
     resource_group_key = string
   }))
 }
+
+variable "linux-VM" {
+  type = map(object({
+    name               = string
+    resource_group_key = string
+    nic_VM_key         = string
+  }))
+}
