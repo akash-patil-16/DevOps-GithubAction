@@ -43,6 +43,14 @@ module "pip-VM" {
   location            = module.resource-group[each.value.resource_group_key].location
 }
 
+module "nsg-VM" {
+  source              = "../../modules/nsg-VM"
+  for_each            = var.nsg_VM
+  nsg_name            = each.value.nsg_name
+  location            = module.resource-group[each.value.resource_group_key].location
+  resource_group_name = module.resource-group[each.value.resource_group_key].name
+}
+
 module "nic-VM" {
   source               = "../../modules/nic-VM"
   for_each             = var.nic_VM
@@ -66,10 +74,3 @@ module "windows-VM" {
   admin_password        = var.admin_password
 }
 
-module "nsg-VM" {
-  source              = "../../modules/nsg-VM"
-  for_each            = var.nsg_VM
-  nsg_name            = each.value.nsg_name
-  location            = module.resource-group[each.value.resource_group_key].location
-  resource_group_name = module.resource-group[each.value.resource_group_key].name
-}
