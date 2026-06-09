@@ -31,12 +31,20 @@ variable "subnet" {
   }))
 }
 
+variable "pip-VM" {
+  type = map(object({
+    pip_name            = string
+    resource_group_key   = string
+  }))
+}
+
 variable "nic_VM" {
   type = map(object({
     name               = string
     resource_group_key = string
     subnet_key         = string
     ip_name            = string
+    pip_key            = string
   }))
 }
 

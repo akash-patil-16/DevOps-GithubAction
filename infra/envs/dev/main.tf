@@ -35,6 +35,14 @@ module "subnet" {
   address_prefixes     = each.value.address_prefixes
 }
 
+module "pip-VM" {
+  source              = "../../modules/pip-VM"
+  for_each            = var.pip-VM
+  pip_name            = each.value.pip_name
+  resource_group_name = module.resource-group[each.value.resource_group_key].name
+  location            = module.resource-group[each.value.resource_group_key].location
+}
+
 module "nic-VM" {
   source              = "../../modules/nic-VM"
   for_each            = var.nic_VM
@@ -43,6 +51,7 @@ module "nic-VM" {
   resource_group_name = module.resource-group[each.value.resource_group_key].name
   subnet_id           = module.subnet[each.value.subnet_key].id
   ip_name             = each.value.ip_name
+  public_ip_address_id = module.pip-VM[each.value.pip_key].id
 }
 
 module "windows-VM" {
