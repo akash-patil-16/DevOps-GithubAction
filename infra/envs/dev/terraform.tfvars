@@ -45,12 +45,20 @@ subnet = {
   }
 }
 
+pip-VM = {
+  pip1 = {
+    pip_name            = "pip-frontend"
+    resource_group_key   = "rg1"
+  }
+}
+
 nic_VM = {
   nic1 = {
     name               = "nic-apatil"
     resource_group_key = "rg1"
     subnet_key         = "subnet1"
     ip_name            = "internal"
+    pip_key            = "pip1"
   }
 }
 
