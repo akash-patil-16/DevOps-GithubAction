@@ -7,6 +7,8 @@ resource "azurerm_linux_virtual_machine" "linux_main" {
   admin_password      = var.admin_password
   network_interface_ids = var.network_interface_ids
 
+  disable_password_authentication = false
+
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
