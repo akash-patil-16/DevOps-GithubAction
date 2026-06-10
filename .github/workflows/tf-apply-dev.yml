@@ -1,0 +1,66 @@
+name: Terraform Dev Deploy
+
+on:
+  push:
+    branches:
+      - dev
+
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    env:
+      TF_VAR_admin_username: ${{ secrets.VM_USERNAME }}
+      TF_VAR_admin_password: ${{ secrets.VM_PASSWORD }}
+      
+    defaults:
+      run:
+        working-directory: infra/envs/dev
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Show Repository Structure
+        run: |
+          echo "Current Directory:"
+          pwd
+          echo "Repository Structure:"
+          find $GITHUB_WORKSPACE -type f | sort
+
+      - name: Show Terraform Files
+        run: |
+          pwd
+          ls -la
+          find . -name "*.tf"
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: >
+            {
+              "clientId":"${{ secrets.AZURE_CLIENT_ID }}",
+              "clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}",
+              "subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}",
+              "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
+            }
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Version
+        run: terraform version
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
