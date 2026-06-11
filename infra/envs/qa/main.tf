@@ -86,3 +86,12 @@ module "linux-VM" {
 
 }
 
+module "Vnet-peering" {
+  source                    = "../../modules/Vnet-peering"
+  for_each                  = var.Vnet-peering
+  peering_name              = each.value.peering_name
+  resource_group_name       = module.resource-group[each.value.resource_group_key].name
+  virtual_network_name      = module.Vnet[each.value.vnet_key].name
+  remote_virtual_network_id = each.value.remote_virtual_network_id
+}
+
