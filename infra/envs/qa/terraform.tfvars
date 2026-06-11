@@ -102,3 +102,12 @@ linux-VM = {
     nic_VM_key         = "nic2"
   }
 }
+
+Vnet-peering = {
+  peering1 = {
+    peering_name              = "peering-qa-to-dev"
+    resource_group_key        = "rg1"
+    vnet_key                  = "vnet1"
+    remote_virtual_network_id = "/subscriptions/2cd4b0da-b78f-45de-af90-bb7b78de22fc/resourceGroups/rg-apatil/providers/Microsoft.Network/virtualNetworks/vnet-apatil"
+  }
+}
