@@ -80,3 +80,12 @@ variable "linux-VM" {
     nic_VM_key         = string
   }))
 }
+
+variable "Vnet-peering" {
+  type = map(object({
+    resource_group_key        = string
+    vnet_key                  = string
+    remote_virtual_network_id = string
+    peering_name              = string
+  }))
+}
