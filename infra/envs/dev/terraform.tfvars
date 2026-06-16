@@ -7,7 +7,7 @@ resource_group = {
 
 storage_account = {
   sa1 = {
-    name                     = "apatilstorageaccount"
+    name                     = "apatilstorageaccountjune"
     resource_group_key       = "rg1"
     account_tier             = "Standard"
     account_replication_type = "LRS"
