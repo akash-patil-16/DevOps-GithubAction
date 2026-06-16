@@ -108,6 +108,6 @@ Vnet-peering = {
     peering_name              = "peering-dev-to-qa"
     resource_group_key        = "rg1"
     vnet_key                  = "vnet1"
-    remote_virtual_network_id = "/subscriptions/2cd4b0da-b78f-45de-af90-bb7b78de22fc/resourceGroups/rg-apatil-qa/providers/Microsoft.Network/virtualNetworks/vnet-apatil-qa"
+    remote_virtual_network_id = "/subscriptions/26ea2bd3-a3fc-4737-96b0-928cd80584a8/resourceGroups/rg-apatil/providers/Microsoft.Network/virtualNetworks/vnet-apatil-qa"
   }
 }
