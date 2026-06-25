@@ -54,6 +54,14 @@ pip-VM = {
     pip_name           = "pip-backend"
     resource_group_key = "rg1"
   }
+  pip3 = {
+    pip_name           = "pip-netfilx1"
+    resource_group_key = "rg1"
+  }
+  pip4 = {
+    pip_name           = "pip-netfilx2"
+    resource_group_key = "rg1"
+  }
 }
 
 nic_VM = {
@@ -80,6 +88,7 @@ nic_VM = {
     resource_group_key = "rg1"
     subnet_key         = "subnet1"
     ip_name            = "netfilx1-linux"
+    pip_key            = "pip3"
     nsg_key            = "nsg3"
   }
 
@@ -88,6 +97,7 @@ nic_VM = {
     resource_group_key = "rg1"
     subnet_key         = "subnet1"
     ip_name            = "netfilx1-linux"
+    pip_key            = "pip4"
     nsg_key            = "nsg4"
   }
 }
