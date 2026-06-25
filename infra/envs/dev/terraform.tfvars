@@ -74,6 +74,22 @@ nic_VM = {
     pip_key            = "pip2"
     nsg_key            = "nsg2"
   }
+
+    nic3 = {
+    name               = "nic-netfilx1-apatil"
+    resource_group_key = "rg1"
+    subnet_key         = "subnet1"
+    ip_name            = "netfilx1-linux"
+    nsg_key            = "nsg3"
+  }
+
+    nic4 = {
+    name               = "nic-netfilx2-apatil"
+    resource_group_key = "rg1"
+    subnet_key         = "subnet1"
+    ip_name            = "netfilx1-linux"
+    nsg_key            = "nsg4"
+  }
 }
 
 windows-VM = {
@@ -93,6 +109,16 @@ nsg_VM = {
     nsg_name           = "nsg-backend"
     resource_group_key = "rg1"
   }
+
+  nsg3 = {
+    nsg_name           = "nsg-netfilx1"
+    resource_group_key = "rg1"
+  }
+
+  nsg4 = {
+  nsg_name           = "nsg-netfilx2"
+  resource_group_key = "rg1"
+  }
 }
 
 linux-VM = {
@@ -100,6 +126,18 @@ linux-VM = {
     name               = "linux-vm-apatil"
     resource_group_key = "rg1"
     nic_VM_key         = "nic2"
+  }
+
+  linux_vm2 = {
+    name               = "linux-vm-netfilx1"
+    resource_group_key = "rg1"
+    nic_VM_key         = "nic3"
+  }
+  
+  linux_vm3 = {
+    name               = "linux-vm-netfilx2"
+    resource_group_key = "rg1"
+    nic_VM_key         = "nic4"
   }
 }
 
