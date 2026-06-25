@@ -96,7 +96,7 @@ nic_VM = {
     name               = "nic-netfilx2-apatil"
     resource_group_key = "rg1"
     subnet_key         = "subnet1"
-    ip_name            = "netfilx1-linux"
+    ip_name            = "netfilx2-linux"
     pip_key            = "pip4"
     nsg_key            = "nsg4"
   }
