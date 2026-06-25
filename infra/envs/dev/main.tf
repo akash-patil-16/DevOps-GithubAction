@@ -63,16 +63,16 @@ module "nic-VM" {
   nsg_id               = module.nsg-VM[each.value.nsg_key].id
 }
 
-module "windows-VM" {
-  source                = "../../modules/windows-VM"
-  for_each              = var.windows-VM
-  name                  = each.value.name
-  location              = module.resource-group[each.value.resource_group_key].location
-  resource_group_name   = module.resource-group[each.value.resource_group_key].name
-  network_interface_ids = [module.nic-VM[each.value.nic_VM_key].id]
-  admin_username        = var.admin_username
-  admin_password        = var.admin_password
-}
+# module "windows-VM" {
+#   source                = "../../modules/windows-VM"
+#   for_each              = var.windows-VM
+#   name                  = each.value.name
+#   location              = module.resource-group[each.value.resource_group_key].location
+#   resource_group_name   = module.resource-group[each.value.resource_group_key].name
+#   network_interface_ids = [module.nic-VM[each.value.nic_VM_key].id]
+#   admin_username        = var.admin_username
+#   admin_password        = var.admin_password
+# }
 
 module "linux-VM" {
   source                = "../../modules/linux-VM"
