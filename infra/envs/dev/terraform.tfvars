@@ -46,10 +46,10 @@ subnet = {
 }
 
 pip-VM = {
-  pip1 = {
-    pip_name           = "pip-frontend"
-    resource_group_key = "rg1"
-  }
+  # pip1 = {
+  #   pip_name           = "pip-frontend"
+  #   resource_group_key = "rg1"
+  # }
   pip2 = {
     pip_name           = "pip-backend"
     resource_group_key = "rg1"
@@ -65,14 +65,14 @@ pip-VM = {
 }
 
 nic_VM = {
-  nic1 = {
-    name               = "nic-apatil"
-    resource_group_key = "rg1"
-    subnet_key         = "subnet1"
-    ip_name            = "internal"
-    pip_key            = "pip1"
-    nsg_key            = "nsg1"
-  }
+  # nic1 = {
+  #   name               = "nic-apatil"
+  #   resource_group_key = "rg1"
+  #   subnet_key         = "subnet1"
+  #   ip_name            = "internal"
+  #   pip_key            = "pip1"
+  #   nsg_key            = "nsg1"
+  # }
 
   nic2 = {
     name               = "nic-linux-apatil"
