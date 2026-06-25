@@ -19,6 +19,7 @@ module "storage-account" {
 module "Vnet" {
 
   source              = "../../modules/Vnet"
+  depends_on          = [module.vnet]
   for_each            = var.Vnet
   name                = each.value.name
   resource_group_name = module.resource-group[each.value.resource_group_key].name
