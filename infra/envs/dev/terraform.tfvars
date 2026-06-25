@@ -50,10 +50,10 @@ pip-VM = {
   #   pip_name           = "pip-frontend"
   #   resource_group_key = "rg1"
   # }
-  pip2 = {
-    pip_name           = "pip-backend"
-    resource_group_key = "rg1"
-  }
+  # pip2 = {
+  #   pip_name           = "pip-backend"
+  #   resource_group_key = "rg1"
+  # }
   pip3 = {
     pip_name           = "pip-netfilx1"
     resource_group_key = "rg1"
@@ -74,14 +74,14 @@ nic_VM = {
   #   nsg_key            = "nsg1"
   # }
 
-  nic2 = {
-    name               = "nic-linux-apatil"
-    resource_group_key = "rg1"
-    subnet_key         = "subnet2"
-    ip_name            = "internal-linux"
-    pip_key            = "pip2"
-    nsg_key            = "nsg2"
-  }
+  # nic2 = {
+  #   name               = "nic-linux-apatil"
+  #   resource_group_key = "rg1"
+  #   subnet_key         = "subnet2"
+  #   ip_name            = "internal-linux"
+  #   pip_key            = "pip2"
+  #   nsg_key            = "nsg2"
+  # }
 
     nic3 = {
     name               = "nic-netfilx1-apatil"
@@ -115,10 +115,10 @@ nsg_VM = {
     nsg_name           = "nsg-frontend"
     resource_group_key = "rg1"
   }
-  nsg2 = {
-    nsg_name           = "nsg-backend"
-    resource_group_key = "rg1"
-  }
+  # nsg2 = {
+  #   nsg_name           = "nsg-backend"
+  #   resource_group_key = "rg1"
+  # }
 
   nsg3 = {
     nsg_name           = "nsg-netfilx1"
@@ -132,11 +132,11 @@ nsg_VM = {
 }
 
 linux-VM = {
-  linux_vm1 = {
-    name               = "linux-vm-apatil"
-    resource_group_key = "rg1"
-    nic_VM_key         = "nic2"
-  }
+  # linux_vm1 = {
+  #   name               = "linux-vm-apatil"
+  #   resource_group_key = "rg1"
+  #   nic_VM_key         = "nic2"
+  # }
 
   linux_vm2 = {
     name               = "linux-vm-netfilx1"
