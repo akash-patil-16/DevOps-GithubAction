@@ -31,12 +31,12 @@ variable "subnet" {
   }))
 }
 
-variable "pip-VM" {
-  type = map(object({
-    pip_name           = string
-    resource_group_key = string
-  }))
-}
+# variable "pip-VM" {
+#   type = map(object({
+#     pip_name           = string
+#     resource_group_key = string
+#   }))
+# }
 
 variable "nic_VM" {
   type = map(object({
@@ -44,8 +44,8 @@ variable "nic_VM" {
     resource_group_key = string
     subnet_key         = string
     ip_name            = string
-    pip_key            = string
-    nsg_key            = string
+    # pip_key            = string
+    # nsg_key            = string
   }))
 }
 
@@ -66,12 +66,12 @@ variable "admin_password" {
   sensitive = true
 }
 
-variable "nsg_VM" {
-  type = map(object({
-    nsg_name           = string
-    resource_group_key = string
-  }))
-}
+# variable "nsg_VM" {
+#   type = map(object({
+#     nsg_name           = string
+#     resource_group_key = string
+#   }))
+# }
 
 variable "linux-VM" {
   type = map(object({

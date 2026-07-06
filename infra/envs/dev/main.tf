@@ -36,21 +36,21 @@ module "subnet" {
   address_prefixes     = each.value.address_prefixes
 }
 
-module "pip-VM" {
-  source              = "../../modules/pip-VM"
-  for_each            = var.pip-VM
-  pip_name            = each.value.pip_name
-  resource_group_name = module.resource-group[each.value.resource_group_key].name
-  location            = module.resource-group[each.value.resource_group_key].location
-}
+# module "pip-VM" {
+#   source              = "../../modules/pip-VM"
+#   for_each            = var.pip-VM
+#   pip_name            = each.value.pip_name
+#   resource_group_name = module.resource-group[each.value.resource_group_key].name
+#   location            = module.resource-group[each.value.resource_group_key].location
+# }
 
-module "nsg-VM" {
-  source              = "../../modules/nsg-VM"
-  for_each            = var.nsg_VM
-  nsg_name            = each.value.nsg_name
-  location            = module.resource-group[each.value.resource_group_key].location
-  resource_group_name = module.resource-group[each.value.resource_group_key].name
-}
+# module "nsg-VM" {
+#   source              = "../../modules/nsg-VM"
+#   for_each            = var.nsg_VM
+#   nsg_name            = each.value.nsg_name
+#   location            = module.resource-group[each.value.resource_group_key].location
+#   resource_group_name = module.resource-group[each.value.resource_group_key].name
+# }
 
 module "nic-VM" {
   source               = "../../modules/nic-VM"
@@ -60,8 +60,8 @@ module "nic-VM" {
   resource_group_name  = module.resource-group[each.value.resource_group_key].name
   subnet_id            = module.subnet[each.value.subnet_key].id
   ip_name              = each.value.ip_name
-  public_ip_address_id = module.pip-VM[each.value.pip_key].id
-  nsg_id               = module.nsg-VM[each.value.nsg_key].id
+  # public_ip_address_id = module.pip-VM[each.value.pip_key].id
+  # nsg_id               = module.nsg-VM[each.value.nsg_key].id
 }
 
 # module "windows-VM" {
@@ -87,11 +87,11 @@ module "linux-VM" {
 
 }
 
-module "Vnet-peering" {
-  source                    = "../../modules/Vnet-peering"
-  for_each                  = var.Vnet-peering
-  peering_name              = each.value.peering_name
-  resource_group_name       = module.resource-group[each.value.resource_group_key].name
-  virtual_network_name      = module.Vnet[each.value.vnet_key].name
-  remote_virtual_network_id = each.value.remote_virtual_network_id
-}
+# module "Vnet-peering" {
+#   source                    = "../../modules/Vnet-peering"
+#   for_each                  = var.Vnet-peering
+#   peering_name              = each.value.peering_name
+#   resource_group_name       = module.resource-group[each.value.resource_group_key].name
+#   virtual_network_name      = module.Vnet[each.value.vnet_key].name
+#   remote_virtual_network_id = each.value.remote_virtual_network_id
+# }
