@@ -17,9 +17,15 @@ resource "azurerm_resource_group" "rg_main" {
 }
 
 resource "azurerm_storage_account" "statefile_backend" {
-  name                     = "aptfstorageaccountjune"
+  name                     = "aptfstorageaccountjuly"
   resource_group_name      = azurerm_resource_group.rg_main.name
   location                 = azurerm_resource_group.rg_main.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+}
+
+resource "azurerm_storage_container" "example" {
+  name                  = "devtfstate"
+  storage_account_id    = azurerm_storage_account.statefile_backend.id
+  container_access_type = "private"
 }
