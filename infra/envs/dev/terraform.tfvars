@@ -43,26 +43,33 @@ subnet = {
     vnet_key           = "vnet1"
     address_prefixes   = ["10.0.3.0/24"]
   }
+
+  subnet4 = {
+    name               = "AzureBastionSubnet"
+    resource_group_key = "rg1"
+    vnet_key           = "vnet1"
+    address_prefixes   = ["10.0.0.0/27"]
+  }
 }
 
-# pip-VM = {
-#   # pip1 = {
-#   #   pip_name           = "pip-frontend"
-#   #   resource_group_key = "rg1"
-#   # }
-#   # pip2 = {
-#   #   pip_name           = "pip-backend"
-#   #   resource_group_key = "rg1"
-#   # }
-#   pip3 = {
-#     pip_name           = "pip-netfilx1"
-#     resource_group_key = "rg1"
-#   }
-#   pip4 = {
-#     pip_name           = "pip-netfilx2"
-#     resource_group_key = "rg1"
-#   }
-# }
+pip-VM = {
+  pip1 = {
+    pip_name           = "pip-bastion"
+    resource_group_key = "rg1"
+  }
+  # pip2 = {
+  #   pip_name           = "pip-backend"
+  #   resource_group_key = "rg1"
+  # }
+  # pip3 = {
+  #   pip_name           = "pip-netfilx1"
+  #   resource_group_key = "rg1"
+  # }
+  # pip4 = {
+  #   pip_name           = "pip-netfilx2"
+  #   resource_group_key = "rg1"
+  # }
+}
 
 nic_VM = {
   nic1 = {
@@ -163,5 +170,15 @@ Vnet-peering = {
     resource_group_key        = "rg1"
     vnet_key                  = "vnet1"
     remote_virtual_network_id = "/subscriptions/26ea2bd3-a3fc-4737-96b0-928cd80584a8/resourceGroups/rg-apatil/providers/Microsoft.Network/virtualNetworks/vnet-apatil-qa"
+  }
+}
+
+Bastion = {
+  bastion1 = {
+    bastion_name        = "bastion-apatil"
+    location            = "central india"
+    resource_group_key  = "rg1"
+    subnet_key          = "subnet4"
+    public_ip_key       = "pip1"
   }
 }
