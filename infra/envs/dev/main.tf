@@ -75,6 +75,21 @@ module "nic-VM" {
 #   admin_password        = var.admin_password
 # }
 
+data "azurerm_key_vault" "key_vault" {
+  name                = "keyvalutapatil"
+  resource_group_name = "rg-apatil"
+}
+
+data "azurerm_key_vault_secret" "admin_password" {
+  name         = "vmpassword"
+  key_vault_id = data.azurerm_key_vault.key_vault.id
+}
+
+data "azurerm_key_vault_secret" "admin_username" {
+  name         = "vmuser"
+  key_vault_id = data.azurerm_key_vault.key_vault.id
+}
+
 module "linux-VM" {
   source                = "../../modules/linux-VM"
   for_each              = var.linux-VM
@@ -82,8 +97,8 @@ module "linux-VM" {
   location              = module.resource-group[each.value.resource_group_key].location
   resource_group_name   = module.resource-group[each.value.resource_group_key].name
   network_interface_ids = [module.nic-VM[each.value.nic_VM_key].id]
-  # admin_username        = var.admin_username
-  # admin_password        = var.admin_password
+  admin_username        = data.azurerm_key_vault_secret.admin_username.value
+  admin_password        = data.azurerm_key_vault_secret.admin_password.value
 
 }
 
