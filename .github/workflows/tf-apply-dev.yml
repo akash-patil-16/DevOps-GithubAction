@@ -10,10 +10,6 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
-
-    env:
-      TF_VAR_admin_username: ${{ secrets.VM_USERNAME }}
-      TF_VAR_admin_password: ${{ secrets.VM_PASSWORD }}
       
     defaults:
       run:

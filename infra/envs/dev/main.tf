@@ -77,7 +77,7 @@ module "nic-VM" {
 
 data "azurerm_key_vault" "key_vault" {
   name                = "keyvalutapatil"
-  resource_group_name = "rg-apatil"
+  resource_group_name = "rg_tfpatil"
 }
 
 data "azurerm_key_vault_secret" "admin_password" {
