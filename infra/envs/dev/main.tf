@@ -53,13 +53,13 @@ module "subnet" {
 # }
 
 module "nic-VM" {
-  source               = "../../modules/nic-VM"
-  for_each             = var.nic_VM
-  name                 = each.value.name
-  location             = module.resource-group[each.value.resource_group_key].location
-  resource_group_name  = module.resource-group[each.value.resource_group_key].name
-  subnet_id            = module.subnet[each.value.subnet_key].id
-  ip_name              = each.value.ip_name
+  source              = "../../modules/nic-VM"
+  for_each            = var.nic_VM
+  name                = each.value.name
+  location            = module.resource-group[each.value.resource_group_key].location
+  resource_group_name = module.resource-group[each.value.resource_group_key].name
+  subnet_id           = module.subnet[each.value.subnet_key].id
+  ip_name             = each.value.ip_name
   # public_ip_address_id = module.pip-VM[each.value.pip_key].id
   # nsg_id               = module.nsg-VM[each.value.nsg_key].id
 }
@@ -82,8 +82,8 @@ module "linux-VM" {
   location              = module.resource-group[each.value.resource_group_key].location
   resource_group_name   = module.resource-group[each.value.resource_group_key].name
   network_interface_ids = [module.nic-VM[each.value.nic_VM_key].id]
-  admin_username        = var.admin_username
-  admin_password        = var.admin_password
+  # admin_username        = var.admin_username
+  # admin_password        = var.admin_password
 
 }
 

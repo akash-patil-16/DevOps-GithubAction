@@ -57,14 +57,14 @@ variable "windows-VM" {
   }))
 }
 
-variable "admin_username" {
-  type = string
-}
+# variable "admin_username" {
+#   type = string
+# }
 
-variable "admin_password" {
-  type      = string
-  sensitive = true
-}
+# variable "admin_password" {
+#   type      = string
+#   sensitive = true
+# }
 
 # variable "nsg_VM" {
 #   type = map(object({
