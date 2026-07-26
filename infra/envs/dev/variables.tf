@@ -31,12 +31,12 @@ variable "subnet" {
   }))
 }
 
-# variable "pip-VM" {
-#   type = map(object({
-#     pip_name           = string
-#     resource_group_key = string
-#   }))
-# }
+variable "pip-VM" {
+  type = map(object({
+    pip_name           = string
+    resource_group_key = string
+  }))
+}
 
 variable "nic_VM" {
   type = map(object({
@@ -87,5 +87,15 @@ variable "Vnet-peering" {
     vnet_key                  = string
     remote_virtual_network_id = string
     peering_name              = string
+  }))
+}
+
+variable "Bastion" {
+  type = map(object({
+    bastion_name        = string
+    location            = string
+    resource_group_key  = string
+    subnet_key          = string
+    public_ip_key       = string
   }))
 }

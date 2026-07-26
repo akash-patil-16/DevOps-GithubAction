@@ -36,13 +36,13 @@ module "subnet" {
   address_prefixes     = each.value.address_prefixes
 }
 
-# module "pip-VM" {
-#   source              = "../../modules/pip-VM"
-#   for_each            = var.pip-VM
-#   pip_name            = each.value.pip_name
-#   resource_group_name = module.resource-group[each.value.resource_group_key].name
-#   location            = module.resource-group[each.value.resource_group_key].location
-# }
+module "pip-VM" {
+  source              = "../../modules/pip-VM"
+  for_each            = var.pip-VM
+  pip_name            = each.value.pip_name
+  resource_group_name = module.resource-group[each.value.resource_group_key].name
+  location            = module.resource-group[each.value.resource_group_key].location
+}
 
 # module "nsg-VM" {
 #   source              = "../../modules/nsg-VM"
@@ -100,6 +100,16 @@ module "linux-VM" {
   admin_username        = data.azurerm_key_vault_secret.admin_username.value
   admin_password        = data.azurerm_key_vault_secret.admin_password.value
 
+}
+
+module "Bastion" {
+  source              = "../../modules/Bastion"
+  for_each            = var.Bastion
+  bastion_name        = each.value.bastion_name
+  location            = module.resource-group[each.value.resource_group_key].location
+  resource_group_name = module.resource-group[each.value.resource_group_key].name
+  subnet_id           = module.subnet[each.value.subnet_key].id
+  public_ip_address_id = module.pip-VM[each.value.public_ip_key].id
 }
 
 # module "Vnet-peering" {
