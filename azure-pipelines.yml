@@ -61,6 +61,9 @@ stages:
             displayName: 'Show Repository Structure'
 
           - script: |
+              cd $(System.DefaultWorkingDirectory)/infra/statefileBackend
+              echo "Current Directory:"
+              
               terraform init
               terraform validate
               terraform plan -out=tfplan
