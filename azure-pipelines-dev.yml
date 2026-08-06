@@ -46,7 +46,7 @@ stages:
 
                     echo "Logged in Successfully"
 
-                    cd $(System.DefaultWorkingDirectory)/infra/statefileBackend
+                    cd $(System.DefaultWorkingDirectory)/infra/envs/dev
                     echo "Current Directory:"
 
                     terraform init
