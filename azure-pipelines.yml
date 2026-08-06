@@ -32,7 +32,7 @@ stages:
           - task: TerraformInstaller@1
             inputs:
               terraformVersion: $(terraformVersion)
-              
+
           - task: AzureCLI@2
             inputs:
               azureSubscription: 'AzureServiceConnectionApatil'
@@ -45,19 +45,12 @@ stages:
                     export ARM_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
 
                     echo "Logged in Successfully"
-          - script: |
-              echo "Current Directory:"
-              pwd
-              echo "Repository Structure:"
-              find $(System.DefaultWorkingDirectory) -type f | sort
-            displayName: 'Show Repository Structure'
 
-          - script: |
-              cd $(System.DefaultWorkingDirectory)/infra/statefileBackend
-              echo "Current Directory:"
+                    cd $(System.DefaultWorkingDirectory)/infra/statefileBackend
+                    echo "Current Directory:"
 
-              terraform init
-              terraform validate
-              terraform plan -out=tfplan
-              terraform apply -auto-approve tfplan
-            displayName: 'Terraform Operations'
+                    terraform init
+                    terraform validate
+                    terraform plan -out=tfplan
+                    terraform apply -auto-approve tfplan
+              DisplayName: 'Terraform Init, Validate, Plan and Apply'     
