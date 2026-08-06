@@ -32,9 +32,6 @@ stages:
           - task: TerraformInstaller@1
             inputs:
               terraformVersion: $(terraformVersion)
-              
-      - job: AzureLogin
-        displayName: 'Azure Login using OIDC'
         steps:
           - task: AzureCLI@2
             inputs:
