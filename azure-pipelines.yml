@@ -60,7 +60,7 @@ stages:
               find $(System.DefaultWorkingDirectory) -type f | sort
             displayName: 'Show Repository Structure'
 
-          -script: |
+          - script: |
               terraform init
               terraform validate
               terraform plan -out=tfplan
