@@ -1,0 +1,56 @@
+trigger: 
+  branches:
+    include:
+      - dev
+  paths:
+    include:
+      - infra/envs/dev/**
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  terraformVersion: 'latest'
+  
+stages:
+  - stage: Checkout
+    displayName: 'Checkout Code'
+    jobs:
+      - job: Checkout
+        displayName: 'Checkout Code'
+        steps:
+          - checkout: self
+            clean: true
+
+  - stage: Deploy
+    displayName: 'Terraform Deployment'
+    dependsOn: Checkout
+    jobs:
+      - job: Terraform
+        displayName: 'Terraform Installation'
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: $(terraformVersion)
+
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: 'AzureServiceConnectionApatil'
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                    export ARM_USE_OIDC=true
+                    export ARM_CLIENT_ID=$servicePrincipalId
+                    export ARM_TENANT_ID=$tenantId
+                    export ARM_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+
+                    echo "Logged in Successfully"
+
+                    cd $(System.DefaultWorkingDirectory)/infra/statefileBackend
+                    echo "Current Directory:"
+
+                    terraform init
+                    terraform validate
+                    terraform plan -out=tfplan
+                    terraform apply -auto-approve tfplan
+              DisplayName: 'Terraform Init, Validate, Plan and Apply'     
