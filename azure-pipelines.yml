@@ -2,7 +2,7 @@ trigger:
   branches:
     include:
       - feature
-  directory:
+  paths:
     include:
       - infra/statefileBackend/**
 
@@ -19,8 +19,8 @@ stages:
       - job: Checkout
         displayName: 'Checkout Code'
         steps:
-          checkout: self
-          clean: true
+          - checkout: self
+            clean: true
 
   - stage: Terraform
     displayName: 'Terraform Operations' 
