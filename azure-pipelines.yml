@@ -24,7 +24,7 @@ stages:
 
   - stage: Deploy
     displayName: 'Terraform Deployment'
-    dependsOn: checkout
+    dependsOn: Checkout
     jobs:
       - job: Terraform
         displayName: 'Terraform Installation'
@@ -32,7 +32,7 @@ stages:
           - task: TerraformInstaller@1
             inputs:
               terraformVersion: $(terraformVersion)
-        steps:
+              
           - task: AzureCLI@2
             inputs:
               azureSubscription: 'AzureServiceConnectionApatil'
