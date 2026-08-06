@@ -8,7 +8,7 @@ variables:
   terraformVersion: 'latest'
   
 stages:
-  - stage :Checkout
+  - stage: Checkout
     displayName: 'Checkout Code'
     jobs:
       - job: Checkout
