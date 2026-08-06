@@ -1,0 +1,30 @@
+trigger: 
+  - feature
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  terraformVersion: 'latest'
+  
+stages:
+  - stage :Checkout
+    displayName: 'Checkout Code'
+    jobs:
+      - job: Checkout
+        displayName: 'Checkout Code'
+        steps:
+          - task: Checkout@1
+            inputs:
+              clean: true
+
+  - stage: Terraform
+    displayName: 'Terraform Operations' 
+    dependsOn: Checkout
+    jobs:
+      - job: Terraform
+        displayName: 'Terraform Operations'
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: $(terraformVersion)
