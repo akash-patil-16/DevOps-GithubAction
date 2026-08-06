@@ -22,21 +22,16 @@ stages:
           - checkout: self
             clean: true
 
-  - stage: Terraform
-    displayName: 'Terraform Operations' 
-    dependsOn: Checkout
+  - stage: Deploy
+    displayName: 'Terraform Deployment'
+    dependsOn: checkout
     jobs:
       - job: Terraform
-        displayName: 'Terraform Operations'
+        displayName: 'Terraform Installation'
         steps:
           - task: TerraformInstaller@1
             inputs:
               terraformVersion: $(terraformVersion)
-
-
-  - stage: AzureLogin
-    displayName: 'Azure Login using OIDC'
-    dependsOn: Terraform
     jobs:
       - job: AzureLogin
         displayName: 'Azure Login using OIDC'
@@ -63,7 +58,7 @@ stages:
           - script: |
               cd $(System.DefaultWorkingDirectory)/infra/statefileBackend
               echo "Current Directory:"
-              
+
               terraform init
               terraform validate
               terraform plan -out=tfplan
