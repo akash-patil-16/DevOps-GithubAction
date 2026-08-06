@@ -52,7 +52,7 @@ resource "azurerm_key_vault_secret" "secret_statefile_backend" {
   key_vault_id = azurerm_key_vault.keyvault_statefile_backend.id
 }
 
-resource "azurerm_key_vault_secret" "secret_statefile_backend" {
+resource "azurerm_key_vault_secret" "secret_backend" {
   name         = "vmuser"
   value        = "adminakash"
   key_vault_id = azurerm_key_vault.keyvault_statefile_backend.id
