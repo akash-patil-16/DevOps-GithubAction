@@ -28,6 +28,7 @@ module "Vnet" {
 
 module "subnet" {
   source               = "../../modules/subnet"
+  depends_on           = [module.Vnet]
   for_each             = var.subnet
   name                 = each.value.name
   resource_group_name  = module.resource-group[each.value.resource_group_key].name
@@ -43,35 +44,50 @@ module "pip-VM" {
   location            = module.resource-group[each.value.resource_group_key].location
 }
 
-module "nsg-VM" {
-  source              = "../../modules/nsg-VM"
-  for_each            = var.nsg_VM
-  nsg_name            = each.value.nsg_name
-  location            = module.resource-group[each.value.resource_group_key].location
-  resource_group_name = module.resource-group[each.value.resource_group_key].name
-}
+# module "nsg-VM" {
+#   source              = "../../modules/nsg-VM"
+#   for_each            = var.nsg_VM
+#   nsg_name            = each.value.nsg_name
+#   location            = module.resource-group[each.value.resource_group_key].location
+#   resource_group_name = module.resource-group[each.value.resource_group_key].name
+# }
 
 module "nic-VM" {
-  source               = "../../modules/nic-VM"
-  for_each             = var.nic_VM
-  name                 = each.value.name
-  location             = module.resource-group[each.value.resource_group_key].location
-  resource_group_name  = module.resource-group[each.value.resource_group_key].name
-  subnet_id            = module.subnet[each.value.subnet_key].id
-  ip_name              = each.value.ip_name
-  public_ip_address_id = module.pip-VM[each.value.pip_key].id
-  nsg_id               = module.nsg-VM[each.value.nsg_key].id
+  source              = "../../modules/nic-VM"
+  for_each            = var.nic_VM
+  name                = each.value.name
+  location            = module.resource-group[each.value.resource_group_key].location
+  resource_group_name = module.resource-group[each.value.resource_group_key].name
+  subnet_id           = module.subnet[each.value.subnet_key].id
+  ip_name             = each.value.ip_name
+  # public_ip_address_id = module.pip-VM[each.value.pip_key].id
+  # nsg_id               = module.nsg-VM[each.value.nsg_key].id
 }
 
-module "windows-VM" {
-  source                = "../../modules/windows-VM"
-  for_each              = var.windows-VM
-  name                  = each.value.name
-  location              = module.resource-group[each.value.resource_group_key].location
-  resource_group_name   = module.resource-group[each.value.resource_group_key].name
-  network_interface_ids = [module.nic-VM[each.value.nic_VM_key].id]
-  admin_username        = var.admin_username
-  admin_password        = var.admin_password
+# module "windows-VM" {
+#   source                = "../../modules/windows-VM"
+#   for_each              = var.windows-VM
+#   name                  = each.value.name
+#   location              = module.resource-group[each.value.resource_group_key].location
+#   resource_group_name   = module.resource-group[each.value.resource_group_key].name
+#   network_interface_ids = [module.nic-VM[each.value.nic_VM_key].id]
+#   admin_username        = var.admin_username
+#   admin_password        = var.admin_password
+# }
+
+data "azurerm_key_vault" "key_vault" {
+  name                = "keyvalutapatil"
+  resource_group_name = "rg_tfpatil"
+}
+
+data "azurerm_key_vault_secret" "admin_password" {
+  name         = "vmpassword"
+  key_vault_id = data.azurerm_key_vault.key_vault.id
+}
+
+data "azurerm_key_vault_secret" "admin_username" {
+  name         = "vmuser"
+  key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
 module "linux-VM" {
@@ -81,16 +97,26 @@ module "linux-VM" {
   location              = module.resource-group[each.value.resource_group_key].location
   resource_group_name   = module.resource-group[each.value.resource_group_key].name
   network_interface_ids = [module.nic-VM[each.value.nic_VM_key].id]
-  admin_username        = var.admin_username
-  admin_password        = var.admin_password
+  admin_username        = data.azurerm_key_vault_secret.admin_username.value
+  admin_password        = data.azurerm_key_vault_secret.admin_password.value
 
 }
 
-module "Vnet-peering" {
-  source                    = "../../modules/Vnet-peering"
-  for_each                  = var.Vnet-peering
-  peering_name              = each.value.peering_name
-  resource_group_name       = module.resource-group[each.value.resource_group_key].name
-  virtual_network_name      = module.Vnet[each.value.vnet_key].name
-  remote_virtual_network_id = each.value.remote_virtual_network_id
+module "Bastion" {
+  source              = "../../modules/Bastion"
+  for_each            = var.Bastion
+  bastion_name        = each.value.bastion_name
+  location            = module.resource-group[each.value.resource_group_key].location
+  resource_group_name = module.resource-group[each.value.resource_group_key].name
+  subnet_id           = module.subnet[each.value.subnet_key].id
+  public_ip_address_id = module.pip-VM[each.value.public_ip_key].id
 }
+
+# module "Vnet-peering" {
+#   source                    = "../../modules/Vnet-peering"
+#   for_each                  = var.Vnet-peering
+#   peering_name              = each.value.peering_name
+#   resource_group_name       = module.resource-group[each.value.resource_group_key].name
+#   virtual_network_name      = module.Vnet[each.value.vnet_key].name
+#   remote_virtual_network_id = each.value.remote_virtual_network_id
+# }

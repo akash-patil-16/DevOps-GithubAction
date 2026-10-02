@@ -1,13 +1,13 @@
 resource_group = {
   rg1 = {
     name     = "rg-apatil"
-    location = "central us"
+    location = "central india"
   }
 }
 
 storage_account = {
   sa1 = {
-    name                     = "apatilstorageaccount"
+    name                     = "apatilstorageaccountjuly"
     resource_group_key       = "rg1"
     account_tier             = "Standard"
     account_replication_type = "LRS"
@@ -43,36 +43,69 @@ subnet = {
     vnet_key           = "vnet1"
     address_prefixes   = ["10.0.3.0/24"]
   }
+
+  subnet4 = {
+    name               = "AzureBastionSubnet"
+    resource_group_key = "rg1"
+    vnet_key           = "vnet1"
+    address_prefixes   = ["10.0.0.0/27"]
+  }
 }
 
 pip-VM = {
   pip1 = {
-    pip_name           = "pip-frontend"
+    pip_name           = "pip-bastion"
     resource_group_key = "rg1"
   }
-  pip2 = {
-    pip_name           = "pip-backend"
-    resource_group_key = "rg1"
-  }
+  # pip2 = {
+  #   pip_name           = "pip-backend"
+  #   resource_group_key = "rg1"
+  # }
+  # pip3 = {
+  #   pip_name           = "pip-netfilx1"
+  #   resource_group_key = "rg1"
+  # }
+  # pip4 = {
+  #   pip_name           = "pip-netfilx2"
+  #   resource_group_key = "rg1"
+  # }
 }
 
 nic_VM = {
   nic1 = {
-    name               = "nic-apatil"
+    name               = "nic-linux-starbucks1"
     resource_group_key = "rg1"
-    subnet_key         = "subnet1"
-    ip_name            = "internal"
-    pip_key            = "pip1"
-    nsg_key            = "nsg1"
+    subnet_key         = "subnet2"
+    ip_name            = "starbucks1-linux"
+    # pip_key            = "pip1"
+    # nsg_key            = "nsg1"
   }
 
   nic2 = {
-    name               = "nic-linux-apatil"
+    name               = "nic-linux-starbucks2"
     resource_group_key = "rg1"
     subnet_key         = "subnet2"
-    ip_name            = "internal-linux"
-    pip_key            = "pip2"
-    nsg_key            = "nsg2"
+    ip_name            = "starbucks2-linux"
+    # pip_key            = "pip2"
+    # nsg_key            = "nsg2"
+  }
+
+  nic3 = {
+    name               = "nic-netfilx1-apatil"
+    resource_group_key = "rg1"
+    subnet_key         = "subnet1"
+    ip_name            = "netfilx1-linux"
+    # pip_key            = "pip3"
+    # nsg_key            = "nsg3"
+  }
+
+  nic4 = {
+    name               = "nic-netfilx2-apatil"
+    resource_group_key = "rg1"
+    subnet_key         = "subnet1"
+    ip_name            = "netfilx2-linux"
+    #pip_key            = "pip4"
+    # nsg_key            = "nsg4"
   }
 }
 
@@ -84,22 +117,50 @@ windows-VM = {
   }
 }
 
-nsg_VM = {
-  nsg1 = {
-    nsg_name           = "nsg-frontend"
-    resource_group_key = "rg1"
-  }
-  nsg2 = {
-    nsg_name           = "nsg-backend"
-    resource_group_key = "rg1"
-  }
-}
+# nsg_VM = {
+#   nsg1 = {
+#     nsg_name           = "nsg-frontend"
+#     resource_group_key = "rg1"
+#   }
+#   # nsg2 = {
+#   #   nsg_name           = "nsg-backend"
+#   #   resource_group_key = "rg1"
+#   # }
+
+#   nsg3 = {
+#     nsg_name           = "nsg-netfilx1"
+#     resource_group_key = "rg1"
+#   }
+
+#   nsg4 = {
+#   nsg_name           = "nsg-netfilx2"
+#   resource_group_key = "rg1"
+#   }
+# }
 
 linux-VM = {
   linux_vm1 = {
-    name               = "linux-vm-apatil"
+    name               = "linux-vm-strubucks2"
     resource_group_key = "rg1"
     nic_VM_key         = "nic2"
+  }
+
+  linux_vm2 = {
+    name               = "linux-vm-netfilx1"
+    resource_group_key = "rg1"
+    nic_VM_key         = "nic3"
+  }
+
+  linux_vm3 = {
+    name               = "linux-vm-netfilx2"
+    resource_group_key = "rg1"
+    nic_VM_key         = "nic4"
+  }
+
+  linux_vm4 = {
+    name               = "linux-vm-strubucks1"
+    resource_group_key = "rg1"
+    nic_VM_key         = "nic1"
   }
 }
 
@@ -108,6 +169,16 @@ Vnet-peering = {
     peering_name              = "peering-dev-to-qa"
     resource_group_key        = "rg1"
     vnet_key                  = "vnet1"
-    remote_virtual_network_id = "/subscriptions/2cd4b0da-b78f-45de-af90-bb7b78de22fc/resourceGroups/rg-apatil-qa/providers/Microsoft.Network/virtualNetworks/vnet-apatil-qa"
+    remote_virtual_network_id = "/subscriptions/26ea2bd3-a3fc-4737-96b0-928cd80584a8/resourceGroups/rg-apatil/providers/Microsoft.Network/virtualNetworks/vnet-apatil-qa"
+  }
+}
+
+Bastion = {
+  bastion1 = {
+    bastion_name        = "bastion-apatil"
+    location            = "central india"
+    resource_group_key  = "rg1"
+    subnet_key          = "subnet4"
+    public_ip_key       = "pip1"
   }
 }

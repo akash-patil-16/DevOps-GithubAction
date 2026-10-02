@@ -44,8 +44,8 @@ variable "nic_VM" {
     resource_group_key = string
     subnet_key         = string
     ip_name            = string
-    pip_key            = string
-    nsg_key            = string
+    # pip_key            = string
+    # nsg_key            = string
   }))
 }
 
@@ -57,21 +57,21 @@ variable "windows-VM" {
   }))
 }
 
-variable "admin_username" {
-  type = string
-}
+# variable "admin_username" {
+#   type = string
+# }
 
-variable "admin_password" {
-  type      = string
-  sensitive = true
-}
+# variable "admin_password" {
+#   type      = string
+#   sensitive = true
+# }
 
-variable "nsg_VM" {
-  type = map(object({
-    nsg_name           = string
-    resource_group_key = string
-  }))
-}
+# variable "nsg_VM" {
+#   type = map(object({
+#     nsg_name           = string
+#     resource_group_key = string
+#   }))
+# }
 
 variable "linux-VM" {
   type = map(object({
@@ -87,5 +87,15 @@ variable "Vnet-peering" {
     vnet_key                  = string
     remote_virtual_network_id = string
     peering_name              = string
+  }))
+}
+
+variable "Bastion" {
+  type = map(object({
+    bastion_name        = string
+    location            = string
+    resource_group_key  = string
+    subnet_key          = string
+    public_ip_key       = string
   }))
 }

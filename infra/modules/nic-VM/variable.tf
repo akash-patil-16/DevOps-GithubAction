@@ -29,12 +29,12 @@ variable "private_ip_address_allocation"{
     default     = "Dynamic"
 }
 
-variable "public_ip_address_id"{
-    description = "ID of the Public IP address to associate with the NIC"
-    type        = string
-}
+# variable "public_ip_address_id"{
+#     description = "ID of the Public IP address to associate with the NIC"
+#     type        = string
+# }
 
-variable "nsg_id"{
-    description = "ID of the Network Security Group to associate with the NIC"
-    type        = string
-}
+# variable "nsg_id"{
+#     description = "ID of the Network Security Group to associate with the NIC"
+#     type        = string
+# }
