@@ -7,7 +7,7 @@ trigger:
       - infra/statefileBackend/**
 
 pool:
-  name: apatil-pool
+  vmImage: 'ubuntu-latest'
 
 stages:
   - stage: Validate
