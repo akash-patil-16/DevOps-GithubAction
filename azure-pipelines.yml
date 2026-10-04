@@ -16,13 +16,16 @@ stages:
       - job: Init
         displayName: Init Terraform
         steps:
+        
         - task: TerraformTask@5
           inputs:
             provider: 'azurerm'
             command: 'init'
             workingDirectory: '$(System.DefaultWorkingDirectory)infra/statefileBackend/'
             backendServiceArm: 'Azure subscription 1(05ff4ddb-aff1-402d-98e9-fb103401eee6)'
-          
+            backendAzureRmStorageAccountName: 'aptfstorageaccount'
+            backendAzureRmContainerName: 'featuretf'
+            backendAzureRmKey: 'featuretf'
         - task: TerraformTask@5
           inputs:
             provider: 'azurerm'
