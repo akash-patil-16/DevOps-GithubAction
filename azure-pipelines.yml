@@ -15,6 +15,11 @@ parameters:
     displayName: Scan TFsec
     type: boolean
     default: true
+  
+  - name:  TFlint
+    displayName: Scan TFlint
+    type: boolean
+    default: true
 
 stages:
   - stage: Validate
@@ -53,6 +58,7 @@ stages:
 
   - stage: Scan_Tflint
     dependsOn: Validate
+    condition: ${{parameters.TFlint}}
     displayName: Scan using TFlint
     jobs:
       - job: Scan_Tflint
@@ -66,6 +72,11 @@ stages:
     dependsOn:
     - Scan_TFsec
     - Scan_Tflint
+    condition: |
+      and(
+        in(dependencies.Scan_TFsec.result, 'Succeeded', 'Skipped'),
+        eq(dependencies.Scan_Tflint.result, 'Succeeded')
+      )
     displayName: Terraform Plan
     jobs:
       - job: Plan
