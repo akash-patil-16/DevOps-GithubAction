@@ -31,3 +31,13 @@ stages:
             provider: 'azurerm'
             command: 'validate'
             workingDirectory: '$(System.DefaultWorkingDirectory)/infra/statefileBackend/'
+
+  - stage: Scan
+    displayName: Scan using Tfsec
+    jobs: 
+      - job: Scan
+        displayName: Scan using Tfsec
+        steps:
+           - script: |
+              tfsec . --format sarif --out tfsec-results.sarif
+             displayName: 'Run tfsec Security Scan'
