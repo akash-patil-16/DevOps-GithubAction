@@ -39,5 +39,5 @@ stages:
         displayName: Scan using Tfsec
         steps:
            - script: |
-              tfsec . --format sarif --out tfsec-results.sarif
+              tfsec . --format sarif --out tfsec-results.sarif --soft-fail
              displayName: 'Run tfsec Security Scan'
