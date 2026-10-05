@@ -9,6 +9,13 @@ trigger:
 pool:
   name: apatil-pool
 
+
+parameters:
+  - name: TFsec
+    displayName: Scan TFsec
+    type: boolean
+    default: true
+
 stages:
   - stage: Validate
     displayName: Validate code
@@ -32,11 +39,12 @@ stages:
             command: 'validate'
             workingDirectory: '$(System.DefaultWorkingDirectory)/infra/statefileBackend/'
 
-  - stage: Scan
+  - stage: Scan_TFsec
     dependsOn: Validate
+    condition: ${{ parameters.TFsec }}
     displayName: Scan using Tfsec
     jobs: 
-      - job: Scan
+      - job: Scan_TFsec
         displayName: Scan using Tfsec
         steps:
            - script: |
@@ -56,7 +64,7 @@ stages:
           
   - stage: Plan
     dependsOn:
-    - Scan
+    - Scan_TFsec
     - Scan_Tflint
     displayName: Terraform Plan
     jobs:
@@ -82,6 +90,7 @@ stages:
 
   - stage: Manual_approval
     pool: server
+    dependsOn: Plan
     displayName: Manual Approval
     jobs:
       - job: Manual_approval
