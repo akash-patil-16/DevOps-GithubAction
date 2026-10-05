@@ -102,7 +102,7 @@ stages:
   - stage: Manual_approval
     pool: server
     dependsOn: Plan
-    condition: succeeded()
+    condition: eq(dependencies.Plan.result, 'Succeeded')
     displayName: Manual Approval
     jobs:
       - job: Manual_approval
