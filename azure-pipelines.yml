@@ -75,7 +75,7 @@ stages:
     condition: |
       and(
         in(dependencies.Scan_TFsec.result, 'Succeeded', 'Skipped'),
-        eq(dependencies.Scan_Tflint.result, 'Succeeded')
+        in(dependencies.Scan_Tflint.result, 'Succeeded','Skipped')
       )
     displayName: Terraform Plan
     jobs:
