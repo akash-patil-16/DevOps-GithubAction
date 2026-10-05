@@ -90,4 +90,3 @@ stages:
           - task: ManualValidation@1
             inputs:
               notifyUsers: 'akashpatil302.ap@gmail.com'
-              approvers: 'Please approve request'
