@@ -33,6 +33,7 @@ stages:
             workingDirectory: '$(System.DefaultWorkingDirectory)/infra/statefileBackend/'
 
   - stage: Scan
+    dependsOn: Validate
     displayName: Scan using Tfsec
     jobs: 
       - job: Scan
@@ -41,3 +42,14 @@ stages:
            - script: |
               tfsec . --format sarif --out tfsec-results.sarif --soft-fail
              displayName: 'Run tfsec Security Scan'
+
+  - stage: Scan_Tflint
+    dependsOn: []
+    displayName: Scan using TFlint
+    jobs:
+      - job: Scan_Tflint
+        steps:
+          - script: |
+              tflint --init
+              tflint --format sarif > tflint-results.sarif || true
+            displayName: 'Run TFLint Scan'
