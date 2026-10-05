@@ -21,7 +21,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)infra/statefileBackend/'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/infra/statefileBackend/'
             backendServiceArm: 'Azure subscription 1(05ff4ddb-aff1-402d-98e9-fb103401eee6)'
             backendAzureRmStorageAccountName: 'aptfstorageaccount'
             backendAzureRmContainerName: 'featuretf'
@@ -30,4 +30,4 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'validate'
-            workingDirectory: '$(System.DefaultWorkingDirectory)infra/statefileBackend/'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/infra/statefileBackend/'
