@@ -23,10 +23,10 @@ parameters:
 
 stages:
   - stage: Validate
-    displayName: Validate code
+    displayName: Terraform Validate
     jobs:
       - job: Init
-        displayName: Init Terraform
+        displayName: Terraform Validate
         steps:
         
         - task: TerraformTask@5
@@ -111,3 +111,27 @@ stages:
           - task: ManualValidation@1
             inputs:
               notifyUsers: 'akashpatil302.ap@gmail.com'
+
+  - stage: Terraform_apply
+    dependsOn: Manual_approval
+    condition:  eq(dependencies.Manual_approval.result, 'Succeeded')
+    displayName: Terraform Apply
+    jobs:
+      - job: Terraform_apply
+        displayName: Terraform Apply
+        steps:
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/infra/statefileBackend/'
+              backendServiceArm: 'Azure subscription 1(05ff4ddb-aff1-402d-98e9-fb103401eee6)'
+              backendAzureRmStorageAccountName: 'aptfstorageaccount'
+              backendAzureRmContainerName: 'featuretf'
+              backendAzureRmKey: 'featuretf'
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/infra/statefileBackend/'
+              environmentServiceNameAzureRM: 'Azure subscription 1(05ff4ddb-aff1-402d-98e9-fb103401eee6)'
