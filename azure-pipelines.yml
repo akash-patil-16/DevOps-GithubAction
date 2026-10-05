@@ -79,3 +79,15 @@ stages:
               command: 'plan'
               workingDirectory: '$(System.DefaultWorkingDirectory)/infra/statefileBackend/'
               environmentServiceNameAzureRM: 'Azure subscription 1(05ff4ddb-aff1-402d-98e9-fb103401eee6)'
+
+  - stage: Manual_approval
+    pool: server
+    displayName: Manual Approval
+    jobs:
+      - job: Manual_approval
+        displayName: Manual Approval 
+        steps:
+          - task: ManualValidation@1
+            inputs:
+              notifyUsers: 'akashpatil302.ap@gmail.com'
+              approvers: 'Please approve request'
