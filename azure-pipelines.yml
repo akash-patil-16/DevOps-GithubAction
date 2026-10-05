@@ -44,7 +44,7 @@ stages:
              displayName: 'Run tfsec Security Scan'
 
   - stage: Scan_Tflint
-    dependsOn: []
+    dependsOn: Validate
     displayName: Scan using TFlint
     jobs:
       - job: Scan_Tflint
