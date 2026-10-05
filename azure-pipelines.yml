@@ -46,7 +46,10 @@ stages:
 
   - stage: Scan_TFsec
     dependsOn: Validate
-    condition: ${{ parameters.TFsec }}
+    condition: and(
+        succeeded('Validate'),
+        ${{ eq(parameters.TFsec, true) }}
+      )
     displayName: Scan using Tfsec
     jobs: 
       - job: Scan_TFsec
@@ -58,7 +61,10 @@ stages:
 
   - stage: Scan_Tflint
     dependsOn: Validate
-    condition: ${{parameters.TFlint}}
+    condition: and(
+        succeeded('Validate'),
+        ${{ eq(parameters.TFsec, true) }}
+      )
     displayName: Scan using TFlint
     jobs:
       - job: Scan_Tflint
