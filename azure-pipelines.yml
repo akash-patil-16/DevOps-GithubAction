@@ -102,6 +102,7 @@ stages:
   - stage: Manual_approval
     pool: server
     dependsOn: Plan
+    condition: succeeded()
     displayName: Manual Approval
     jobs:
       - job: Manual_approval
