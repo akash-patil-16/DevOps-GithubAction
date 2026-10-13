@@ -112,6 +112,25 @@ stages:
       - job: Plan
         displayName: Terraform Plan
         steps:
+
+          - checkout: self
+            fetchDepth: 0
+            fetchTags: true
+            persistCredentials: true
+
+          - bash: |
+              set -euo pipefail
+
+              TAG="refs/tags/${GIT_TAG}"
+
+              git fetch origin "$TAG"
+              git checkout --detach FETCH_HEAD
+
+              echo "Deploying Git tag: $GIT_TAG"
+              git log -1 --oneline
+            displayName: 'Checkout Selected Git Tag'
+            env:
+              GIT_TAG: ${{ parameters.GitTag }}
           - task: TerraformTask@5
             inputs:
               provider: 'azurerm'
@@ -150,6 +169,24 @@ stages:
       - job: Terraform_apply
         displayName: Terraform Apply
         steps:
+          - checkout: self
+            fetchDepth: 0
+            fetchTags: true
+            persistCredentials: true
+
+          - bash: |
+              set -euo pipefail
+
+              TAG="refs/tags/${GIT_TAG}"
+
+              git fetch origin "$TAG"
+              git checkout --detach FETCH_HEAD
+
+              echo "Deploying Git tag: $GIT_TAG"
+              git log -1 --oneline
+            displayName: 'Checkout Selected Git Tag'
+            env:
+              GIT_TAG: ${{ parameters.GitTag }}
           - task: TerraformTask@5
             inputs:
               provider: 'azurerm'
