@@ -21,6 +21,11 @@ parameters:
     type: boolean
     default: true
 
+  - name: GitTag
+    displayName: 'Select Git Tag to Deploy'
+    type: string
+    default: 'v1.2.0'
+
 stages:
   - stage: Validate
     displayName: Terraform Validate
@@ -28,6 +33,25 @@ stages:
       - job: Init
         displayName: Terraform Validate
         steps:
+
+        - checkout: self
+          fetchDepth: 0
+          fetchTags: true
+          persistCredentials: true
+
+        - bash: |
+            set -euo pipefail
+
+            TAG="refs/tags/${GIT_TAG}"
+
+            git fetch origin "$TAG"
+            git checkout --detach FETCH_HEAD
+
+            echo "Deploying Git tag: $GIT_TAG"
+            git log -1 --oneline
+          displayName: 'Checkout Selected Git Tag'
+          env:
+            GIT_TAG: ${{ parameters.GitTag }}
         
         - task: TerraformTask@5
           inputs:
