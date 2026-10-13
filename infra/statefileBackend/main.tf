@@ -24,7 +24,7 @@ resource "azurerm_resource_group" "rg_statefile_backend" {
 }
 
 resource "azurerm_storage_account" "statefile_backend" {
-  name                     = "aptfstorageaccountspet"
+  name                     = "aptfstorageaccountjuly"
   resource_group_name      = azurerm_resource_group.rg_statefile_backend.name
   location                 = azurerm_resource_group.rg_statefile_backend.location
   account_tier             = "Standard"
