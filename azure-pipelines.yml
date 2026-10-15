@@ -37,20 +37,7 @@ stages:
           parameters:
             GitTag: ${{ parameters.GitTag }}
         
-        - task: TerraformTask@5
-          inputs:
-            provider: 'azurerm'
-            command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/infra/statefileBackend/'
-            backendServiceArm: 'Azure subscription 1(05ff4ddb-aff1-402d-98e9-fb103401eee6)'
-            backendAzureRmStorageAccountName: 'aptfstorageaccount'
-            backendAzureRmContainerName: 'featuretf'
-            backendAzureRmKey: 'featuretf'
-        - task: TerraformTask@5
-          inputs:
-            provider: 'azurerm'
-            command: 'validate'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/infra/statefileBackend/'
+        - template: templates/terraform-validate.yml
 
   - stage: Scan_TFsec
     dependsOn: Validate
@@ -63,8 +50,10 @@ stages:
       - job: Scan_TFsec
         displayName: Scan using Tfsec
         steps:
-          
+
         - template: templates/tf-scan.yml
+          parameters:
+            GitTag: ${{ parameters.GitTag }}
 
   - stage: Scan_Tflint
     dependsOn: Validate
@@ -78,6 +67,8 @@ stages:
         steps:
 
         - template: templates/tflint-scan.yml
+          parameters:
+            GitTag: ${{ parameters.GitTag }}
           
   - stage: Plan
     dependsOn:
@@ -97,22 +88,7 @@ stages:
             parameters:
               GitTag: ${{ parameters.GitTag }}
 
-          - task: TerraformTask@5
-            inputs:
-              provider: 'azurerm'
-              command: 'init'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/infra/statefileBackend/'
-              backendServiceArm: 'Azure subscription 1(05ff4ddb-aff1-402d-98e9-fb103401eee6)'
-              backendAzureRmStorageAccountName: 'aptfstorageaccount'
-              backendAzureRmContainerName: 'featuretf'
-              backendAzureRmKey: 'featuretf'
-
-          - task: TerraformTask@5
-            inputs:
-              provider: 'azurerm'
-              command: 'plan'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/infra/statefileBackend/'
-              environmentServiceNameAzureRM: 'Azure subscription 1(05ff4ddb-aff1-402d-98e9-fb103401eee6)'
+          - template: templates/terraform-plan.yml
 
   - stage: Manual_approval
     pool: server
@@ -138,19 +114,5 @@ stages:
           - template: templates/checkout.yml
             parameters:
               GitTag: ${{ parameters.GitTag }}
-
-          - task: TerraformTask@5
-            inputs:
-              provider: 'azurerm'
-              command: 'init'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/infra/statefileBackend/'
-              backendServiceArm: 'Azure subscription 1(05ff4ddb-aff1-402d-98e9-fb103401eee6)'
-              backendAzureRmStorageAccountName: 'aptfstorageaccount'
-              backendAzureRmContainerName: 'featuretf'
-              backendAzureRmKey: 'featuretf'
-          - task: TerraformTask@5
-            inputs:
-              provider: 'azurerm'
-              command: 'apply'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/infra/statefileBackend/'
-              environmentServiceNameAzureRM: 'Azure subscription 1(05ff4ddb-aff1-402d-98e9-fb103401eee6)'
+              
+          - template: templates/terraform-apply.yml
