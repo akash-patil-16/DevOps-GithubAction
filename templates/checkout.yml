@@ -1,18 +1,25 @@
-        - checkout: self
-          fetchDepth: 0
-          fetchTags: true
-          persistCredentials: true
+parameters:
+  - name: GitTag
+    displayName: 'Select Git Tag to Deploy'
+    type: string
+    default: 'v1.2.0'
 
-        - bash: |
-            set -euo pipefail
+steps:
+  - checkout: self
+    fetchDepth: 0
+    fetchTags: true
+    persistCredentials: true
 
-            TAG="refs/tags/${GIT_TAG}"
+  - bash: |
+      set -euo pipefail
 
-            git fetch origin "$TAG"
-            git checkout --detach FETCH_HEAD
+      TAG="refs/tags/${GIT_TAG}"
 
-            echo "Deploying Git tag: $GIT_TAG"
-            git log -1 --oneline
-          displayName: 'Checkout Selected Git Tag'
-          env:
-            GIT_TAG: ${{ parameters.GitTag }}
+      git fetch origin "$TAG"
+      git checkout --detach FETCH_HEAD
+
+      echo "Deploying Git tag: $GIT_TAG"
+      git log -1 --oneline
+    displayName: 'Checkout Selected Git Tag'
+    env:
+      GIT_TAG: ${{ parameters.GitTag }}

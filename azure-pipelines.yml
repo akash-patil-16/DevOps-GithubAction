@@ -33,7 +33,9 @@ stages:
       - job: Init
         displayName: Terraform Validate
         steps:
-        - template: checkout.yml
+        - template: templates/checkout.yml
+          parameters:
+            GitTag: ${{ parameters.GitTag }}
         
         - task: TerraformTask@5
           inputs:
@@ -61,6 +63,7 @@ stages:
       - job: Scan_TFsec
         displayName: Scan using Tfsec
         steps:
+
            - script: |
               tfsec . --format sarif --out tfsec-results.sarif --soft-fail
              displayName: 'Run tfsec Security Scan'
@@ -94,25 +97,10 @@ stages:
       - job: Plan
         displayName: Terraform Plan
         steps:
+          - template: templates/checkout.yml
+            parameters:
+              GitTag: ${{ parameters.GitTag }}
 
-          - checkout: self
-            fetchDepth: 0
-            fetchTags: true
-            persistCredentials: true
-
-          - bash: |
-              set -euo pipefail
-
-              TAG="refs/tags/${GIT_TAG}"
-
-              git fetch origin "$TAG"
-              git checkout --detach FETCH_HEAD
-
-              echo "Deploying Git tag: $GIT_TAG"
-              git log -1 --oneline
-            displayName: 'Checkout Selected Git Tag'
-            env:
-              GIT_TAG: ${{ parameters.GitTag }}
           - task: TerraformTask@5
             inputs:
               provider: 'azurerm'
@@ -151,24 +139,10 @@ stages:
       - job: Terraform_apply
         displayName: Terraform Apply
         steps:
-          - checkout: self
-            fetchDepth: 0
-            fetchTags: true
-            persistCredentials: true
-
-          - bash: |
-              set -euo pipefail
-
-              TAG="refs/tags/${GIT_TAG}"
-
-              git fetch origin "$TAG"
-              git checkout --detach FETCH_HEAD
-
-              echo "Deploying Git tag: $GIT_TAG"
-              git log -1 --oneline
-            displayName: 'Checkout Selected Git Tag'
-            env:
-              GIT_TAG: ${{ parameters.GitTag }}
+          - template: templates/checkout.yml
+            parameters:
+              GitTag: ${{ parameters.GitTag }}
+              
           - task: TerraformTask@5
             inputs:
               provider: 'azurerm'
