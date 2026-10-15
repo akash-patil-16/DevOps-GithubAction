@@ -63,10 +63,8 @@ stages:
       - job: Scan_TFsec
         displayName: Scan using Tfsec
         steps:
-
-           - script: |
-              tfsec . --format sarif --out tfsec-results.sarif --soft-fail
-             displayName: 'Run tfsec Security Scan'
+          
+        - template: templates/tf-scan.yml
 
   - stage: Scan_Tflint
     dependsOn: Validate
@@ -78,10 +76,8 @@ stages:
     jobs:
       - job: Scan_Tflint
         steps:
-          - script: |
-              tflint --init
-              tflint --format sarif > tflint-results.sarif || true
-            displayName: 'Run TFLint Scan'
+
+        - template: templates/tflint-scan.yml
           
   - stage: Plan
     dependsOn:
@@ -142,7 +138,7 @@ stages:
           - template: templates/checkout.yml
             parameters:
               GitTag: ${{ parameters.GitTag }}
-              
+
           - task: TerraformTask@5
             inputs:
               provider: 'azurerm'
